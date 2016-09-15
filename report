@@ -1,0 +1,46 @@
+sub profit {
+	$mw->withdraw();
+	$mw=new MainWindow;
+	$mw->geometry("1500x1500");
+	my $sth = $dbh ->prepare("SELECT * FROM reconcilation ");
+	 $sth->execute() or die $DBI::errstr;
+	$x=40;
+	$i=1;
+	 $trainnameWidget=$mw->Label()->place(-x=>20,-y=>70,-width=>200,-height=>650);
+	 $solddWidget=$mw->Label()->place(-x=>220,-y=>70,-width=>300,-height=>650);
+	 $leftWidget=$mw->Label()->place(-x=>520,-y=>70,-width=>300,-height=>650);
+	 $profitWidget=$mw->Label()->place(-x=>820,-y=>70,-width=>100,-height=>650);
+	 $lossWidget=$mw->Label()->place(-x=>920,-y=>70,-width=>250,-height=>650);
+	  $trainnameWidget->Label(-text=>"TRAIN NAME ",-font=>'Times 16')
+   			 				->place(-x=>10,-y=>10);
+   		 $solddWidget->Label(-text=> "TICKETS SOLD ",-font=>'Times 16')
+   			 				->place(-x=>10,-y=>10);
+   		 $leftWidget->Label(-text=>"TICKETS LEFT ",-font=>'Times 16')
+   			 				->place(-x=>10,-y=>10);
+   		 $profitWidget->Label(-text=>"PROFIT ",-font=>'Times 16')
+   			 				->place(-x=>10,-y=>10);
+   		 $lossWidget->Label(-text=>"LOSS",-font=>'Times 16')
+   		 					->place(-x=>10,-y=>10);
+
+		@mails=();
+
+		while (my @row = $sth->fetchrow_array()) {
+   			 my ($sold,$left,$gain,$losss,$tname ) = @row;
+   			 push @mails,$tname;
+   			 $trainnameWidget->Label(-text=>"$i. $tname",-font=>'Times 16')
+   			 				->place(-x=>10,-y=>10+$x);
+   			 $solddWidget->Label(-text=>"$sold",-font=>'Times 16')
+   			 				->place(-x=>10,-y=>10+$x);
+   			 $leftWidget->Label(-text=>"$left",-font=>'Times 16')
+   			 				->place(-x=>10,-y=>10+$x);
+   			 $profitWidget->Label(-text=>"$gain",-font=>'Times 16')
+   			 				->place(-x=>10,-y=>10+$x);
+			$lossWidget->Label(-text=>"$losss",-font=>'Times 16')
+   			 				->place(-x=>10,-y=>10+$x);
+			 $x=$x+40;
+   			 $i=$i+1;
+		}
+		my $but1 = $mw -> Button (-text => "BACK" ,-command =>\&display ) -> place( -x =>650 ,-y => 350);
+	$sth -> finish();
+}
+

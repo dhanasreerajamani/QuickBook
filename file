@@ -1,0 +1,8 @@
+#my @user=("$ent_name2","$ent_age","$ent_gen");
+#push( @user,$ent_name2);
+#push( @user,$ent_age);
+#push( @user,$ent_gen);
+#open(DATA,"+>nivi1.txt")or die "Couldn'topen file,$!";
+#print DATA @user;
+#close(DATA);
+#exit;

@@ -1,0 +1,33 @@
+sub nilgiris {
+	 my $sth = $dbh ->prepare("SELECT * FROM trains WHERE name='Nilgiris' ");
+	 $sth->execute() or die $DBI::errstr;
+	 my @row;
+	 if($sth->rows == 1)
+	 {
+		$mw->withdraw();
+		$mw=new MainWindow;
+		$mw->geometry("1500x1500");
+		while (@row = $sth->fetchrow_array())
+		{
+			my ($train_no , $train_name, $source_t, $depart, $dest, $arrival, $duration ,$halts_no ) = @row;
+			my $la1 = $mw -> Label (-text => "TRAIN NO. : " , -background => 'lightyellow') ->place(-x=>500,-y=>0);
+			my $no = $mw -> Label (-text => $train_no) -> place(-x=>700,-y=>0);
+			my $la2 = $mw -> Label (-text => "TRAIN NAME : ", -background => 'lightyellow') -> place(-x=>500,-y=>20);
+			my $names = $mw -> Label (-text => $train_name) -> place(-x=>700,-y=>20);
+			my $la3 = $mw -> Label (-text => "SOURCE : ", -background => 'lightyellow') -> place(-x=>500,-y=>40);
+			my $sou = $mw -> Label (-text => $source_t) -> place(-x=>700,-y=>40);
+			my $la4 = $mw -> Label (-text => "DEPARTURE TIME : ", -background => 'lightyellow') -> place(-x=>500,-y=>60);
+			my $depart1 = $mw -> Label (-text => $depart) -> place(-x=>700,-y=>60);
+			my $la5 = $mw -> Label (-text => "DESTINATION : ", -background => 'lightyellow') -> place(-x=>500,-y=>80);
+			my $destine = $mw -> Label (-text => $dest) -> place(-x=>700,-y=>80);
+			my $la6 = $mw -> Label (-text => "ARRIVAL TIME : ", -background => 'lightyellow') -> place(-x=>500,-y=>100);
+			my $arrival1 = $mw -> Label (-text => $arrival) -> place(-x=>700,-y=>100);
+			my $la7 = $mw -> Label (-text => "TOTAL TIME OF TRAVEL : ", -background => 'lightyellow') -> place(-x=>500,-y=>120);
+			my $durat = $mw -> Label (-text => $duration) -> place(-x=>700,-y=>120);
+			my $la8 = $mw -> Label (-text => "NO. OF HALTS : ", -background => 'lightyellow') -> place(-x=>500,-y=>140);
+			my $stops = $mw -> Label (-text => $halts_no) -> place(-x=>700,-y=>140);
+		}
+		my $but = $mw -> Button (-text => "Check Availability of Seats", -command =>\&checkSeatn) -> place(-x=>600,-y=>180);
+	 }
+	$sth -> finish();
+}
